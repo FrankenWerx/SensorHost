@@ -9,21 +9,22 @@ Step-by-step for building and shipping a new board.
 - ESPHome installed — CLI (`pip install esphome`) or via the Home Assistant add-on
 - A data-capable USB-C cable (charge-only cables will not work)
 - The repo files on your machine (clone or local copy)
-- A `secrets.yaml` file in the same directory as the config YAML
 
 ---
 
-## Step 1 — Set up secrets.yaml
+## Step 1 — Choose the hotspot password
 
-Create or edit `secrets.yaml` in your local copy of the repo. The template only needs one secret at flash time:
+No `secrets.yaml` is needed. The "SensorHost Setup" fallback hotspot password defaults to `sensorhost`, which is set in `sensorhost-v3-base.yaml`. Because the repo is public, treat that default as public. The hotspot only runs while the board can't reach its WiFi.
 
-```yaml
-ap_fallback_password: "YourChosenPassword"
+To give a board its own password, add `-s ap_password YourPassword` to the flash command in Step 4, e.g.:
+
+```bash
+esphome -s ap_password YourPassword run sensorhost-v3-c6.yaml
 ```
 
-> **Note:** You do NOT need `wifi_ssid` or `wifi_password` in secrets. The template has no pre-configured WiFi — the board will boot straight into provisioning mode so the recipient can enter their own credentials.
+> **Note:** You do NOT need `wifi_ssid` or `wifi_password` either. The template has no pre-configured WiFi — the board will boot straight into provisioning mode so the recipient can enter their own credentials.
 
-Write down the `ap_fallback_password` value somewhere safe. You will need to communicate it to the recipient (or include it on the printed setup card).
+If you use a non-default password, write it down. You will need to communicate it to the recipient (or include it on the printed setup card).
 
 ---
 
@@ -52,7 +53,7 @@ The v3 PCB accepts either a C3 or C6 XIAO module — pick the config that matche
 
 ## Step 4 — Flash
 
-**From the CLI** (run from the directory containing the YAML and secrets.yaml):
+**From the CLI** (run from the directory containing the YAML files):
 
 ```bash
 esphome run sensorhost-v3-c6.yaml
@@ -71,7 +72,7 @@ esphome run sensorhost-v3-c6.yaml --device COM4
 ```
 
 **From the Home Assistant ESPHome add-on:**
-Upload the YAML files and secrets.yaml to your ESPHome config folder, open the device in the dashboard, and click **Install → Plug into this computer**.
+Upload the YAML files to your ESPHome config folder, open the device in the dashboard, and click **Install → Plug into this computer**.
 
 ---
 

@@ -1,6 +1,10 @@
 substitutions:
   name: "sensorhost"
   friendly_name: "SensorHost"
+  # Fallback hotspot password. The default ships in this public repo so
+  # adoption works without any secrets.yaml entry; override per board at
+  # flash time with: esphome run <variant>.yaml -s ap_password <password>
+  ap_password: "sensorhost"
   # Pin substitutions (i2c_sda_pin, i2c_scl_pin, ld2410_tx_pin, ld2410_rx_pin,
   # light_sensor_pin, neopixel_pin) are defined per chip in each variant file:
   # the XIAO C3 and C6 route different GPIOs to the same D-pads on the PCB.
@@ -25,7 +29,7 @@ wifi:
   power_save_mode: NONE
   ap:
     ssid: "${friendly_name} Setup"
-    password: !secret ap_fallback_password
+    password: "${ap_password}"
 
 captive_portal:
 

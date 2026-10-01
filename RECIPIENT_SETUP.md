@@ -44,7 +44,7 @@ Choose the method that matches your phone or computer:
 
 1. Open your WiFi settings.
 2. Connect to the network named **"SensorHost Setup"**.
-   - Password: `______________________________` *(written on the box or provided separately)*
+   - Password: `sensorhost` *(unless a different one is written on the box or was sent to you)*
 3. A setup page should open automatically. If it doesn't, open a browser and go to **192.168.4.1**.
 4. Enter your home WiFi name and password and click Save.
 5. The board will disconnect from the setup network and connect to your home WiFi. Reconnect your phone to your normal WiFi.

@@ -33,11 +33,9 @@ The board will connect to your WiFi and appear in your Home Assistant ESPHome da
 ### Prerequisites
 
 - ESPHome installed (CLI or add-on)
-- `secrets.yaml` with at minimum:
-
-```yaml
-ap_fallback_password: "YourSharedAPPassword"
-```
+- No `secrets.yaml` needed. The "SensorHost Setup" hotspot password defaults to
+  `sensorhost`; to use a different one for a board, flash with
+  `-s ap_password YourPassword`.
 
 ### Flash a board
 
