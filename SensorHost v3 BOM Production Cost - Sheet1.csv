@@ -1,0 +1,17 @@
+Component,Price/Component,Supplier,Quantity Req'd,
+Xiao esp32-c3,$6.6600,Amazon,1,$6.6600
+LD2410C,$5.9900,Amazon,1,$5.9900
+AHT20+BMP280,$1.8900,Amazon,1,$1.8900
+100nF Ceramic Capacitor,$0.0150,LCSC,1,$0.0150
+330Ω Resistor,$0.0036,LCSC,1,$0.0036
+SMD5050-4P LED,$0.0794,LCSC,1,$0.0794
+TEMT6000,$0.7218,LCSC,1,$0.7218
+PCB,$0.3690,JLCPCB,1,$0.3690
+10kΩ Resistor,$0.0008,LCSC,1,$0.0008
+5.1kΩ Resistor,$0.0009,LCSC,2,$0.0018
+USB-C Female Connector,$0.1960,LCSC,1,$0.1960
+,,,,
+,,,,
+,,,,
+,,,Total:,
+,,,$15.9274,

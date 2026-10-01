@@ -1,0 +1,24 @@
+packages:
+  base: !include sensorhost-v3-base.yaml
+
+# XIAO ESP32-C6 GPIO for each PCB pad. These differ from the C3 even though
+# the pads are the same.
+substitutions:
+  light_sensor_pin: GPIO0   # D0
+  neopixel_pin: GPIO21      # D3
+  i2c_sda_pin: GPIO22       # D4
+  i2c_scl_pin: GPIO23       # D5
+  ld2410_tx_pin: GPIO16     # D6
+  ld2410_rx_pin: GPIO17     # D7
+
+dashboard_import:
+  package_import_url: github://FrankenWerx/SensorHost/sensorhost-v3-c6.yaml@main
+  import_full_config: false
+
+esphome:
+  build_path: C:/esphome-build/sensorhost-c6
+
+esp32:
+  variant: esp32c6
+  framework:
+    type: esp-idf
