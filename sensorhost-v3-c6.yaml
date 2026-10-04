@@ -15,9 +15,6 @@ dashboard_import:
   package_import_url: github://FrankenWerx/SensorHost/sensorhost-v3-c6.yaml@main
   import_full_config: false
 
-esphome:
-  build_path: C:/esphome-build/sensorhost-c6
-
 esp32:
   variant: esp32c6
   framework:

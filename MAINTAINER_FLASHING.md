@@ -9,6 +9,7 @@ Step-by-step for building and shipping a new board.
 - ESPHome installed — CLI (`pip install esphome`) or via the Home Assistant add-on
 - A data-capable USB-C cable (charge-only cables will not work)
 - The repo files on your machine (clone or local copy)
+- **Windows only:** set a short build folder once, or ESP-IDF builds fail with "filename too long": `setx ESPHOME_BUILD_PATH C:\esphome-build` (then reopen your terminal). Builds land in `C:\esphome-build\<device name>`; switching between the C3 and C6 variants triggers a clean rebuild. Do not put `build_path:` in the shared YAMLs — every adopted config inherits it, and boards end up sharing one build folder.
 
 ---
 
