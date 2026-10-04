@@ -24,7 +24,7 @@ Plug in via USB-C. The status LED will light up.
 
 ### Step 3 — Done
 
-The board will connect to your WiFi and appear in your Home Assistant ESPHome dashboard within a minute or two as a discovered device. Click **Adopt** to add it — this pulls the latest configuration template from this GitHub repo and creates a fully editable entry in your dashboard.
+The board will connect to your WiFi and appear in your Home Assistant ESPHome dashboard within a minute or two as a discovered device. Click **Take control** (called **Adopt** in older versions), keep the suggested hostname, and set any friendly name you like — this pulls the latest configuration template from this GitHub repo and creates a fully editable entry in your dashboard.
 
 ---
 

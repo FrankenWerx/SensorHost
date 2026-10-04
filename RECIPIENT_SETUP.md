@@ -55,12 +55,18 @@ Choose the method that matches your phone or computer:
 
 1. Open **Home Assistant**.
 2. Go to **Settings → Add-ons → ESPHome** and click **Open Web UI**.
-3. You should see a **"Discovered"** device called **SensorHost** with an **Adopt** button.
+3. You should see a **"Discovered"** device called **SensorHost xxxxxx** (the last six characters are unique to your board) with a **Take control** button (older versions call it **Adopt**).
 
    > If it doesn't appear within 2 minutes, try refreshing the page.
 
-4. Click **Adopt**. ESPHome will download the configuration from GitHub and set up the device. This takes a minute or two.
-5. Once adopted, the device will appear in your ESPHome dashboard with a green **Online** status.
+4. Click **Take control**. In the window that opens:
+   - **Device name (hostname): leave it exactly as suggested** (`sensorhost-xxxxxx`). Changing it here stops the first install from finding the board.
+   - **Friendly name:** change this to whatever you like, e.g. "Living Room Sensor". This is the name you'll see in Home Assistant.
+   - Leave **Enable API encryption** ticked.
+5. Click **Take control**. ESPHome will download the configuration from GitHub and set up the device. This takes a minute or two.
+6. Once it's done, the device will appear in your ESPHome dashboard with a green **Online** status.
+
+   > Want a different hostname later? Use the device's **⋮ → Rename** menu in ESPHome. Don't edit the `name:` line in its configuration by hand.
 
 ---
 
@@ -102,5 +108,5 @@ Open a browser manually and go to `192.168.4.1`.
 **Board doesn't appear in ESPHome after connecting to WiFi**
 Make sure your phone/computer is back on your home WiFi (not still on "SensorHost Setup"). Refresh the ESPHome dashboard. If it still doesn't show, confirm the ESPHome add-on (not just the ESPHome integration) is installed and running.
 
-**"Adopt" button never appears**
+**"Take control" (or "Adopt") button never appears**
 The board may have connected to your WiFi but ESPHome isn't running. Go to Settings → Add-ons → ESPHome and make sure it shows as **Running**.
