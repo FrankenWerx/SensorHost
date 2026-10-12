@@ -15,7 +15,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: "FrankenWerx.sensorhost"
-    version: "1.0.0"
+    version: "1.0.1"
 
 logger:
 
@@ -223,9 +223,13 @@ sensor:
     temperature:
       name: "Temperature"
       filters:
-        - lambda: |-
-            float offset_f = 18.5;
-            return x * (9.0/5.0) + 32.0 - offset_f;
+        - lambda: return x * (9.0/5.0) + 32.0;
+        # Two-point calibration against a reference thermometer
+        # (raw sensor °F -> true °F). Self-heating from the board does not
+        # stay constant, so a single fixed offset drifts away from 70°F.
+        - calibrate_linear:
+            - 88.5 -> 70.0
+            - 72.1 -> 43.8
       unit_of_measurement: "°F"
     humidity:
       name: "Humidity"
