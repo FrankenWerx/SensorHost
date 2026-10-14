@@ -67,6 +67,11 @@ select:
       name: out pin level
 
 button:
+  # Reboots the ESP itself. The LD2410 "restart" button below only
+  # restarts the radar module.
+  - platform: restart
+    name: "Reboot"
+
   - platform: ld2410
     factory_reset:
       name: "factory reset"
