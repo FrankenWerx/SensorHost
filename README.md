@@ -55,7 +55,7 @@ Every board gets a unique name based on its MAC address (e.g., `sensorhost-aabbc
 
 1. Make sensor/config changes in `sensorhost-v3-base.yaml` (both chip variants pick these up automatically)
 2. For chip-specific changes, edit the relevant variant file (`sensorhost-v3-c6.yaml` or `sensorhost-v3-c3.yaml`)
-3. Bump `project: version:` in the variant file(s) you changed (e.g., `1.0.0` → `1.1.0`)
+3. Bump `project: version:` in `sensorhost-v3-base.yaml` (e.g., `1.0.0` → `1.1.0`)
 4. Commit and push to `main`
 
 Each household's ESPHome dashboard independently checks this repo via `dashboard_import`. When the version in the repo is newer than what's installed, their dashboard shows an update available — they can apply it with one click. No access to their instance needed.

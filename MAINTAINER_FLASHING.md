@@ -6,10 +6,11 @@ Step-by-step for building and shipping a new board.
 
 ## Prerequisites
 
-- ESPHome installed — CLI (`pip install esphome`) or via the Home Assistant add-on
+- ESPHome installed — CLI (`pip install esphome`) or via the Home Assistant add-on. ESPHome 2026.7 and later need **Python 3.12+**; on an older Python, pip silently stops at 2026.6.x. Build with the same ESPHome version your Home Assistant add-on runs.
 - A data-capable USB-C cable (charge-only cables will not work)
 - The repo files on your machine (clone or local copy)
 - **Windows only:** set a short build folder once, or ESP-IDF builds fail with "filename too long": `setx ESPHOME_BUILD_PATH C:\esphome-build` (then reopen your terminal). Builds land in `C:\esphome-build\<device name>`; switching between the C3 and C6 variants triggers a clean rebuild. Do not put `build_path:` in the shared YAMLs — every adopted config inherits it, and boards end up sharing one build folder.
+- **Windows, if your user folder name contains a space:** ESP-IDF builds fail with `ninja: error: 'C:/Users/<first word>', needed by ... missing`. ESPHome downloads ESP-IDF under your user folder by default, so move it once: `setx ESPHOME_ESP_IDF_PREFIX C:\esphome-idf`, reopen your terminal, then `esphome clean <config>.yaml` before rebuilding.
 
 ---
 
@@ -110,7 +111,7 @@ Checklist before the board leaves your hands:
 When you want to push an update to all boards in the field:
 
 1. Make your changes in `sensorhost-v3-base.yaml` (for sensor/config changes) or in the relevant variant YAML (for chip-specific changes).
-2. Bump the `version:` field in the variant YAML(s) you changed:
+2. Bump the `version:` field under `project:` in `sensorhost-v3-base.yaml` — without a bump, dashboards never offer the update:
    ```yaml
    project:
      name: "FrankenWerx.sensorhost"
@@ -119,6 +120,27 @@ When you want to push an update to all boards in the field:
 3. Commit and push to `main` on GitHub.
 
 Each recipient's ESPHome dashboard will show an **Update available** indicator. They click it, it pulls the new config from GitHub, recompiles, and flashes over WiFi. You don't need access to their HA instance.
+
+**GitHub packages are cached for a day.** A dashboard that built within the last 24 hours reuses its copy of the repo and logs `Skipping update for https://github.com/FrankenWerx/SensorHost.git@main, will refresh on the next run after ...`, so the install silently ships the old config. To pull a change immediately, replace the one-line `github://` package in the device YAML with the long form and install again:
+
+```yaml
+packages:
+  FrankenWerx.sensorhost:
+    url: https://github.com/FrankenWerx/SensorHost
+    ref: main
+    files: [sensorhost-v3-c6.yaml]   # or sensorhost-v3-c3.yaml
+    refresh: always
+```
+
+### Flashing a board in place (OTA from the CLI)
+
+A board that is already on WiFi can be reflashed from your PC without unplugging it — point ESPHome at its IP:
+
+```bash
+esphome run sensorhost-v3-c6.yaml --device 192.168.x.x
+```
+
+Flashing the repo config this way removes any API encryption key the dashboard added, so Home Assistant must re-add or reconfigure the device afterward. The board keeps its saved WiFi.
 
 ---
 
@@ -131,3 +153,5 @@ Each recipient's ESPHome dashboard will show an **Update available** indicator. 
 | Compile error about `packages:` | Ensure you have a recent ESPHome version (`esphome version` should be 2023.x or later) |
 | Board not appearing in HA after provisioning | Confirm ESPHome **add-on** is installed, not just the integration |
 | AP not broadcasting after flash | Check serial output; board may have picked up a cached WiFi credential — re-flash to clear |
+| Dashboard shows the board **Offline** while Home Assistant still gets data | The dashboard finds boards by mDNS, which does not cross subnets/VLANs (or escape a metal enclosure). Add `use_address: <board IP>` under `wifi:` in the device YAML, or flash from the CLI with `--device <board IP>` |
+| Some sensors stop updating while the LD2410 keeps going | The board's polling timers have stalled (seen on a C6 built with ESPHome 2026.6.2). Press **Reboot**, then rebuild with a current ESPHome |

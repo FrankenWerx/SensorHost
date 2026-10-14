@@ -108,5 +108,11 @@ Open a browser manually and go to `192.168.4.1`.
 **Board doesn't appear in ESPHome after connecting to WiFi**
 Make sure your phone/computer is back on your home WiFi (not still on "SensorHost Setup"). Refresh the ESPHome dashboard. If it still doesn't show, confirm the ESPHome add-on (not just the ESPHome integration) is installed and running.
 
+**I installed an update but the new feature isn't there**
+ESPHome only re-downloads the configuration from GitHub once a day. Wait a day and click **Install** again, or ask the person who gave you the board for the one-time YAML change that forces a fresh download.
+
+**Some readings (temperature, humidity, pressure) stopped updating**
+Open the device in Home Assistant and press **Reboot**. If it happens again, let the person who gave you the board know.
+
 **"Take control" (or "Adopt") button never appears**
 The board may have connected to your WiFi but ESPHome isn't running. Go to Settings → Add-ons → ESPHome and make sure it shows as **Running**.
