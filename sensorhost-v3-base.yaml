@@ -15,7 +15,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: "FrankenWerx.sensorhost"
-    version: "1.0.2"
+    version: "1.0.3"
 
 logger:
 
@@ -229,12 +229,17 @@ sensor:
       name: "Temperature"
       filters:
         - lambda: return x * (9.0/5.0) + 32.0;
-        # Two-point calibration against a reference thermometer
+        # Three-point calibration against a reference thermometer
         # (raw sensor °F -> true °F). Self-heating from the board does not
         # stay constant, so a single fixed offset drifts away from 70°F.
+        # "exact" interpolates piecewise between neighbouring points, so the
+        # curve passes through every point instead of a best-fit line.
         - calibrate_linear:
-            - 88.5 -> 70.0
-            - 72.1 -> 43.8
+            method: exact
+            datapoints:
+              - 64.88 -> 34.0
+              - 72.1 -> 43.8
+              - 88.5 -> 70.0
       unit_of_measurement: "°F"
     humidity:
       name: "Humidity"
