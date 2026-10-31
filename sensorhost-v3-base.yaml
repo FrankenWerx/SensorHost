@@ -15,7 +15,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: "FrankenWerx.sensorhost"
-    version: "1.0.3"
+    version: "1.0.4"
 
 logger:
 
@@ -259,7 +259,7 @@ sensor:
     attenuation: 12db
     filters:
       - lambda: return x * 2000.0;
-    update_interval: 5s
+    update_interval: 30s
 
 light:
   - platform: esp32_rmt_led_strip

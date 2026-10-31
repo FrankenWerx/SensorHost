@@ -19,3 +19,42 @@ esp32:
   variant: esp32c6
   framework:
     type: esp-idf
+
+# ESP32-C6 silicon fault (esp-idf#19036): the SYSTIMER counter behind
+# esp_timer can clear bits and jump backward by minutes to hours. ESPHome's
+# scheduler runs on esp_timer, so every polled sensor goes quiet until the
+# clock catches up, while loop-driven components like the LD2410 keep going.
+# clock_guard steps esp_timer forward again in place; loop_watchdog reboots
+# if a repair ever fails. Pinned to a commit so field boards build the same
+# code. Both components are GPL-3.0, like ESPHome itself.
+external_components:
+  - source:
+      type: git
+      url: https://github.com/danjurgens/esp32c6-systimer-backstep
+      ref: 5f432b4cc163c050656256381d5f11583dee9ad1
+    components: [clock_guard, loop_watchdog]
+
+clock_guard:
+  check_interval: 1s
+  threshold: 5s
+  max_correction: 2h
+  correction_count:
+    name: "Clock Corrections"
+  total_corrected:
+    name: "Total Clock Corrected"
+
+loop_watchdog:
+  update_interval: 10s
+  timeout: 35s
+  reboot: true
+  # Also require esp_timer to have diverged from the tick, so an OTA that
+  # blocks the loop is never mistaken for the fault.
+  require_clock_stall: true
+  clock_stall_threshold: 10s
+  reboot_after: 10min
+  stall_count:
+    name: "Scheduler Stalls"
+  reboot_count:
+    name: "Scheduler Stall Reboots"
+  micro_stall_count:
+    name: "Scheduler Micro Stalls"
