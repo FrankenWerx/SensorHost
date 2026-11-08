@@ -15,7 +15,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: "FrankenWerx.sensorhost"
-    version: "1.0.4"
+    version: "1.0.5"
 
 logger:
 
@@ -163,6 +163,19 @@ sensor:
   - platform: internal_temperature
     name: "Internal Temperature"
     id: die_temp
+
+  # Signal strength at the board's location, to diagnose placement (in-wall,
+  # cabinets, appliances) without a laptop.
+  - platform: wifi_signal
+    name: "Wi-Fi Signal"
+    update_interval: 60s
+    entity_category: diagnostic
+
+  # Resets on every reboot, so unexpected restarts show up in HA history.
+  - platform: uptime
+    name: "Uptime"
+    update_interval: 60s
+    entity_category: diagnostic
 
   - platform: ld2410
     moving_distance:
