@@ -70,11 +70,13 @@ Each household's ESPHome dashboard independently checks this repo via `dashboard
 | v3 (current) | ESP32-C3 | `sensorhost-v3-c3.yaml` |
 | v2 | ESP32-C3 only | `sensorhost-v3-c3.yaml` |
 
-v2 and v3 PCBs are nearly identical — the only differences are the onboard LED component and an added capacitor and resistor. All sensor GPIO assignments are the same across both revisions.
+v2 and v3 PCBs share the same footprint and sensor wiring. v3 changes the onboard LED component (with an added capacitor and resistor), turns the edge connections into plated through-holes, uses a thinner 1 mm PCB, and accepts the C6 as well as the C3. All sensor GPIO assignments are the same across both revisions.
 
 Shared sensor config lives in `sensorhost-v3-base.yaml`. Both variant files import it via `packages:`.
 
 ## Notes
+
+- **TODO: confirm the light sensor pin (changed in 1.0.6).** The v3 schematic wires the TEMT6000 to pad D1, but firmware before 1.0.6 read D0, so 1.0.6 moved it to D1 (C6 GPIO1, C3 GPIO3). After a board updates, cover the light sensor and shine a light on it. If the Light Sensor reading now follows the light, keep the change. If it stopped responding, or only responded before 1.0.6, revert to D0 (C6 GPIO0, C3 GPIO2).
 
 - C6 adds 802.15.4 / Matter-Thread potential over the C3
 - Verify C6 GPIO strapping pin behavior with the LD2410C before committing to C6 for a production run
