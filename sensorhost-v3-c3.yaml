@@ -3,7 +3,7 @@ packages:
 
 # XIAO ESP32-C3 GPIO for each PCB pad.
 substitutions:
-  light_sensor_pin: GPIO2   # D0
+  light_sensor_pin: GPIO3   # D1
   neopixel_pin: GPIO5       # D3
   i2c_sda_pin: GPIO6        # D4
   i2c_scl_pin: GPIO7        # D5

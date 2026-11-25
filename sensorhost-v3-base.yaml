@@ -15,7 +15,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: "FrankenWerx.sensorhost"
-    version: "1.0.5"
+    version: "1.0.6"
 
 logger:
 
